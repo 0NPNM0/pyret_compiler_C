@@ -3,7 +3,7 @@ scanner 100%
 parser 80%
 sementic analyzer 0%
 
-scanner details：
+<1>  scanner details：
 
 1.Define tokens：
 ![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/23437b3c-dc7f-4eb3-bfe5-29c261367f06)
@@ -69,6 +69,95 @@ result:
 ![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/bc8b4cd7-e42a-4192-b48d-5cd679a04409)
 
 
-parser details：
+<2>  parser details：
+1. Implemented grammars:
 
-[parser report.docx](https://github.com/0NPNM0/pyret_compiler_C/files/14331832/parser.report.docx)
+《program》
+<program> => (<stmt>)+
+
+《expression》
+<expr> =>  <non-op-expr>  | <binop-expr> | <unop-expr>
+<non-op-expr> => <id> | <literal> | <fun-call> | <paren-expr> | <if-expr> | <block> | <construct-expr> | <lambda-expr>
+<unop-expr> => <unop> ( <non-op-expr> |  <paren-expr> )  
+<unop> => not
+<binop-expr> => <non-op-expr> <binop> ( <non-op-expr> | <paren-expr> )
+<binop> => [+ , - , * , / , %, < , <= , > , >= ,  ==]
+<paren-expr> => \( <expr> \)
+<if-expr> =>
+   if <expr> : <block> (<else-if>)+  (else: <block>)? end |
+   if <expr> : <block> (<else-if>)*  else: <block> end
+‹else-if› =>  else if <expr> : <block>
+<fun-call> => <id>  \(  (  | (<expr> ,)* <expr> )  \)
+<block> => <stmt> | block :  <stmt>* end
+<construct-expr> => <array> | <list>
+<list> => \[ list: (  | (<expr> ,)* <expr> ) \]
+<array> => \[ array: (  | (<expr> ,)* <expr> ) \]
+<lambda-expr>  => lam <fun-header> : <block> end
+
+《statement》
+<stmt> =>  <when-stmt> | <assign-stmt> | <expr> |
+            <decl-stmt> | <binding-stmt>
+<stmts> => (<stmt>) *
+<assign-stmt> => <id> := <expr> 
+<when-stmt> => when <expr> : <block> end
+<decl-stmt> => <var-decl> | <fun-decl>
+<var-decl> => (shadow)? (rec)? var <id> = <expr>
+<fun-decl> => (shadow)? (rec)? fun <id> <fun-header> : <stmts> end
+<fun-header> => \( < params>  \) (<return-part>)
+<return-part> =>  -> <type-name>
+<params> =>   | <param_list>
+<param_list> => (<param> ,)* <param>
+<param> =>  (shadow)? <id> [:: <type-name>]
+<binding-stmt> => <id> = <expr>
+ 
+《literal》
+<literal> => <boolean> | <string> | <nothing> | <number> 
+<boolean> =>  true | false
+<string> => <single_quote_str> | <double_quote_str> | <multi_line_str>
+<single_quote_str> => ' ([ASCII]-[' \n] | \')* '
+<double_quote_str> => " ([ASCII]-[" \n] | \")* "
+<nothing> => 
+<number>  =>  <integer> 
+<integer> => [- \+]? [0-9]+
+
+《names》
+<id> => (<name>) – (<keyword>) 
+<type-name> => Any | Number | String | Boolean | Nothing | Function
+
+2.Test results with simple correct Pyr code:
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/f37ae4a9-6f79-44b5-8f01-0e2c57184d59)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/7ec75729-bb4a-4217-be32-a32e479b17fe)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/ece0de0d-6013-41c8-a5ea-bd115958253f)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/e13aca27-06ad-43af-927e-04532c3e02b9)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/c7e7fce9-6d08-42b4-95eb-3038953be3a1)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/c1351e20-7f0a-48cf-ac61-7d050f6bf209)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/268e5d6c-aa6e-4677-b817-5b5a9612b051)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/6eb2d4ef-1e6c-4b53-87f6-2a9c821c4bb5)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/47b462ff-c9df-499f-b1af-36ac34daeb0a)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/6d42b65d-810b-49f1-9ec6-e69ab64e5c55)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/104da55e-fe35-4326-ab46-d2159d03f9b7)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/d93576f2-69a5-4957-956c-0d3adccb9fa4)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/f1bb228b-17b6-4ed0-9d09-e3da3f482521)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/9f2d383c-52f2-4214-bae3-4798fa294ed0)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/de6fbfc6-ccc4-4cf7-b548-86bccf7069bb)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/849d9e31-c2bf-40ba-8321-9604caac9450)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/968d790e-cc04-46fd-afb3-e83b4dbeef98)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/c56926a9-b54c-4caa-8d74-9b41819afb17)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/5de2bf39-250e-44a7-b87f-c4e2876de65a)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/be09dab1-213d-4250-848a-ba57321021fb)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/522e2ffa-2360-4d22-a855-8491f2c68933)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/a882bc57-b2b7-4c08-8e6e-4011d52525f3)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/3c15a42f-a5c1-41bf-ade0-00831d586c52)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/07b7fd12-53c1-4126-bd93-c9f6fa90ad92)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/c1dee3e4-7f49-4179-b2af-82bcc5de0c88)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/9ffb77e0-2a72-47df-ab87-c198bfecf82b)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/5c08c906-f798-40af-9748-2dcfd4f1fc24)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/75e7808d-64c3-4623-82ae-73dbf762f4dd)
+
+3.Test results with complex correct Pyr code:
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/8e6aa38d-578f-42c1-bb2e-4168b9db85f9)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/2f39cfbb-6cfa-44ef-a2b6-84bbe8a789f9)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/be00d9a3-60e3-4945-a269-ac7edccece8b)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/70484437-0669-47b8-ae5e-4a134977d96b)
+![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/3c295370-31f4-402d-b3ed-d57aeb3c62c6)
+
