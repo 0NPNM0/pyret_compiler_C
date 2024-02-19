@@ -26,6 +26,7 @@ scanner details：
 
 
 result:
+
 ![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/ac5b1446-5dd3-4f7f-9e07-434f6e5b802a)
 ![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/ffe76e59-ed6a-497e-9d2b-9e65d34d0d0d)
 ![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/0d4cdfbe-f67f-4422-8abb-1a3682c95cac)
@@ -37,6 +38,7 @@ result:
 
 
 result:
+
 ![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/e67506e6-bf97-4ea5-a7ce-b0944e659466)
 ![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/ea70ee25-04df-4e7b-8c5a-c38932e6fdd4)
 
@@ -46,6 +48,7 @@ result:
 
 
 result:
+
 ![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/530a4269-29e8-4628-b674-ae1df78d8ec4)
 ![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/0217709b-62de-4793-a1ab-766c6aadb2aa)
 ![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/9dc142b6-3a01-4a22-b088-ee858ee4fff3)
@@ -58,6 +61,7 @@ result:
 
 
 result:
+
 ![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/06682e9d-2597-4625-8783-c3f0256da095)
 ![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/98f7d738-af15-4912-9438-05beba48ab1e)
 ![image](https://github.com/0NPNM0/pyret_compiler_C/assets/98509588/ce080788-15f8-4a84-b519-3034923d49d9)
